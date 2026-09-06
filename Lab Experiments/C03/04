@@ -1,0 +1,11 @@
+% Diet Suggestion System
+
+diet(diabetes, 'Vegetables, whole grains, fruits and low sugar foods').
+diet(hypertension, 'Fruits, vegetables, low salt foods and whole grains').
+diet(obesity, 'Vegetables, fruits, lean protein and low calorie foods').
+diet(anemia, 'Green leafy vegetables, beans, spinach and iron rich foods').
+diet(cold, 'Warm soups, fruits, vegetables and plenty of fluids').
+
+% Rule to suggest diet
+suggest_diet(Disease, Diet) :-
+    diet(Disease, Diet).
