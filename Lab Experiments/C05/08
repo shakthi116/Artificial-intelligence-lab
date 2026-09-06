@@ -1,0 +1,49 @@
+# Bayesian Network
+
+from pgmpy.models import DiscreteBayesianNetwork
+from pgmpy.factors.discrete import TabularCPD
+
+# Create network
+model = DiscreteBayesianNetwork([
+    ('Rain', 'WetGrass'),
+    ('Sprinkler', 'WetGrass')
+])
+
+# Probability of Rain
+cpd_rain = TabularCPD(
+    variable='Rain',
+    variable_card=2,
+    values=[[0.7], [0.3]]
+)
+
+# Probability of Sprinkler
+cpd_sprinkler = TabularCPD(
+    variable='Sprinkler',
+    variable_card=2,
+    values=[[0.6], [0.4]]
+)
+
+# Probability of WetGrass
+cpd_wetgrass = TabularCPD(
+    variable='WetGrass',
+    variable_card=2,
+    values=[
+        [0.99, 0.80, 0.90, 0.10],
+        [0.01, 0.20, 0.10, 0.90]
+    ],
+    evidence=['Rain', 'Sprinkler'],
+    evidence_card=[2, 2]
+)
+
+# Add probabilities
+model.add_cpds(
+    cpd_rain,
+    cpd_sprinkler,
+    cpd_wetgrass
+)
+
+# Check model
+print("Bayesian Network:")
+print(model.edges())
+
+print("\nModel is valid:", model.check_model())
