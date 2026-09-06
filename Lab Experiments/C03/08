@@ -1,0 +1,30 @@
+% Medical Diagnosis System
+
+symptom(ravi, fever).
+symptom(ravi, cough).
+symptom(ravi, body_pain).
+
+symptom(anu, sneezing).
+symptom(anu, runny_nose).
+symptom(anu, cough).
+
+symptom(kiran, fever).
+symptom(kiran, cough).
+symptom(kiran, breathing_problem).
+
+% Diagnosis rules
+
+disease(Person, flu) :-
+    symptom(Person, fever),
+    symptom(Person, cough),
+    symptom(Person, body_pain).
+
+disease(Person, cold) :-
+    symptom(Person, sneezing),
+    symptom(Person, runny_nose),
+    symptom(Person, cough).
+
+disease(Person, pneumonia) :-
+    symptom(Person, fever),
+    symptom(Person, cough),
+    symptom(Person, breathing_problem).
