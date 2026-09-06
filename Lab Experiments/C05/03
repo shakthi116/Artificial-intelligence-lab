@@ -1,0 +1,71 @@
+# Q-Learning Reinforcement Learning
+
+import numpy as np
+import random
+
+# Environment: 5 states
+# State 4 is the goal
+states = 5
+actions = 2
+
+# Q-table
+Q = np.zeros((states, actions))
+
+# Parameters
+alpha = 0.8
+gamma = 0.9
+epsilon = 0.2
+
+# Training
+for episode in range(1000):
+
+    state = 0
+
+    while state != 4:
+
+        # Choose action
+        if random.random() < epsilon:
+            action = random.randint(0, 1)
+        else:
+            action = np.argmax(Q[state])
+
+        # Move right or left
+        if action == 0:
+            next_state = min(state + 1, 4)
+        else:
+            next_state = max(state - 1, 0)
+
+        # Reward
+        if next_state == 4:
+            reward = 10
+        else:
+            reward = -1
+
+        # Update Q-value
+        Q[state, action] = Q[state, action] + alpha * (
+            reward + gamma * np.max(Q[next_state])
+            - Q[state, action]
+        )
+
+        state = next_state
+
+print("Trained Q-Table:")
+print(np.round(Q, 2))
+
+# Test the trained agent
+state = 0
+path = [state]
+
+while state != 4:
+
+    action = np.argmax(Q[state])
+
+    if action == 0:
+        state = min(state + 1, 4)
+    else:
+        state = max(state - 1, 0)
+
+    path.append(state)
+
+print("\nAgent Path:")
+print(path)
