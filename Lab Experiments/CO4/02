@@ -1,0 +1,44 @@
+# Linear Regression
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Training data
+X = np.array([1, 2, 3, 4, 5])
+Y = np.array([2, 4, 5, 4, 5])
+
+# Calculate mean
+x_mean = np.mean(X)
+y_mean = np.mean(Y)
+
+# Calculate slope
+numerator = np.sum((X - x_mean) * (Y - y_mean))
+denominator = np.sum((X - x_mean) ** 2)
+
+m = numerator / denominator
+
+# Calculate intercept
+c = y_mean - m * x_mean
+
+print("Slope =", m)
+print("Intercept =", c)
+
+# Prediction function
+def predict(x):
+    return m * x + c
+
+# Predict value
+x_test = 6
+y_pred = predict(x_test)
+
+print("Predicted value for X =", x_test, "is", y_pred)
+
+# Plot regression line
+Y_pred = predict(X)
+
+plt.scatter(X, Y)
+plt.plot(X, Y_pred)
+plt.xlabel("X")
+plt.ylabel("Y")
+plt.title("Linear Regression")
+plt.show()
