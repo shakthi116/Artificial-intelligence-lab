@@ -1,0 +1,36 @@
+# Hyperparameter Tuning using GridSearchCV
+
+from sklearn.datasets import load_iris
+from sklearn.model_selection import GridSearchCV
+from sklearn.tree import DecisionTreeClassifier
+
+# Load dataset
+iris = load_iris()
+
+X = iris.data
+y = iris.target
+
+# Create model
+model = DecisionTreeClassifier(random_state=42)
+
+# Define parameters
+parameters = {
+    'max_depth': [2, 3, 4, 5],
+    'min_samples_split': [2, 5, 10]
+}
+
+# Grid Search
+grid = GridSearchCV(
+    model,
+    parameters,
+    cv=5
+)
+
+# Train model
+grid.fit(X, y)
+
+print("Best Parameters:")
+print(grid.best_params_)
+
+print("\nBest Accuracy:")
+print(grid.best_score_)
