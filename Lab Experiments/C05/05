@@ -1,0 +1,27 @@
+# Markov Chain for Predicting Sequences
+
+import random
+
+# Transition probabilities
+transition = {
+    "Sunny": {"Sunny": 0.7, "Rainy": 0.3},
+    "Rainy": {"Sunny": 0.4, "Rainy": 0.6}
+}
+
+# Starting state
+current = "Sunny"
+
+print("Current State:", current)
+
+# Predict next 5 states
+for i in range(5):
+
+    states = list(transition[current].keys())
+    probabilities = list(transition[current].values())
+
+    current = random.choices(
+        states,
+        weights=probabilities
+    )[0]
+
+    print("Predicted State:", current)
