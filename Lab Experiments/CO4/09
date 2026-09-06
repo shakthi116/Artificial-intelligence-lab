@@ -1,0 +1,25 @@
+# Dimensionality Reduction using PCA
+
+from sklearn.datasets import load_iris
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
+
+# Load dataset
+iris = load_iris()
+
+X = iris.data
+
+print("Original Shape:", X.shape)
+
+# Standardize data
+X_scaled = StandardScaler().fit_transform(X)
+
+# Apply PCA
+pca = PCA(n_components=2)
+
+X_pca = pca.fit_transform(X_scaled)
+
+print("Reduced Shape:", X_pca.shape)
+
+print("\nFirst 5 PCA values:")
+print(X_pca[:5])
