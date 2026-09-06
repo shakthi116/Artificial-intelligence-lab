@@ -1,0 +1,35 @@
+% Monkey Banana Problem
+
+% Initial state:
+% Monkey is at door, box is at window, bananas are at middle.
+
+% Monkey walks from one place to another
+move(state(Monkey, Box, on_floor, HasBanana),
+     state(NewPlace, Box, on_floor, HasBanana)) :-
+    Monkey \= Box,
+    NewPlace = Box.
+
+% Monkey pushes the box
+move(state(Place, Place, on_floor, HasBanana),
+     state(NewPlace, NewPlace, on_floor, HasBanana)) :-
+    NewPlace = middle.
+
+% Monkey climbs onto the box
+move(state(Place, Place, on_floor, HasBanana),
+     state(Place, Place, on_box, HasBanana)).
+
+% Monkey grabs bananas
+move(state(middle, middle, on_box, no),
+     state(middle, middle, on_box, yes)).
+
+% Goal state
+goal(state(_, _, _, yes)).
+
+% Find solution
+solve(State) :-
+    goal(State),
+    write('Monkey has the bananas!'), nl.
+
+solve(State) :-
+    move(State, NewState),
+    solve(NewState).
