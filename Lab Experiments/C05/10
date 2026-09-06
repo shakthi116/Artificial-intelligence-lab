@@ -1,0 +1,84 @@
+# Genetic Algorithm to Evolve Neural Network
+
+import numpy as np
+import random
+
+# XOR input and output
+X = np.array([
+    [0, 0],
+    [0, 1],
+    [1, 0],
+    [1, 1]
+])
+
+Y = np.array([
+    0,
+    1,
+    1,
+    0
+])
+
+# Neural network
+def neural_network(weights):
+
+    W1 = weights[:4].reshape(2, 2)
+    W2 = weights[4:6].reshape(2, 1)
+
+    hidden = 1 / (1 + np.exp(-np.dot(X, W1)))
+    output = 1 / (1 + np.exp(-np.dot(hidden, W2)))
+
+    return output.flatten()
+
+
+# Fitness function
+def fitness(weights):
+
+    output = neural_network(weights)
+
+    error = np.mean((Y - output) ** 2)
+
+    return 1 / (1 + error)
+
+
+# Create population
+population = [
+    np.random.randn(6)
+    for _ in range(20)
+]
+
+# Genetic Algorithm
+for generation in range(100):
+
+    # Calculate fitness
+    population.sort(
+        key=fitness,
+        reverse=True
+    )
+
+    # Select best two
+    parent1 = population[0]
+    parent2 = population[1]
+
+    # Crossover
+    point = random.randint(1, 5)
+
+    child = np.concatenate((
+        parent1[:point],
+        parent2[point:]
+    ))
+
+    # Mutation
+    for i in range(len(child)):
+        if random.random() < 0.1:
+            child[i] += np.random.randn() * 0.5
+
+    # Replace worst
+    population[-1] = child
+
+# Best neural network
+best = population[0]
+
+print("Best Fitness:", fitness(best))
+
+print("\nPredicted Output:")
+print(np.round(neural_network(best), 2))
