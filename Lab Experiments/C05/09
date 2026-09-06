@@ -1,0 +1,25 @@
+# Face Recognition using Pre-trained Model
+
+import face_recognition
+import cv2
+
+# Load known person's image
+known_image = face_recognition.load_image_file("known.jpg")
+known_encoding = face_recognition.face_encodings(known_image)[0]
+
+# Load test image
+test_image = face_recognition.load_image_file("test.jpg")
+test_encodings = face_recognition.face_encodings(test_image)
+
+# Compare faces
+for encoding in test_encodings:
+
+    result = face_recognition.compare_faces(
+        [known_encoding],
+        encoding
+    )
+
+    if result[0]:
+        print("Face Recognized")
+    else:
+        print("Unknown Face")
