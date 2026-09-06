@@ -1,0 +1,25 @@
+# Object Detection using Pre-trained YOLO Model
+
+from ultralytics import YOLO
+
+# Load pre-trained YOLO model
+model = YOLO("yolo11n.pt")
+
+# Detect objects in image
+results = model("image.jpg")
+
+# Display detection results
+for result in results:
+    result.show()
+
+    print("Detected Objects:")
+
+    for box in result.boxes:
+        class_id = int(box.cls[0])
+        confidence = float(box.conf[0])
+
+        print(
+            model.names[class_id],
+            "Confidence:",
+            round(confidence, 2)
+        )
